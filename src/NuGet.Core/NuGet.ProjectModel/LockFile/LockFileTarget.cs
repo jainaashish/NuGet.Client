@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using NuGet.Shared;
 using NuGet.Frameworks;
 
 namespace NuGet.ProjectModel
@@ -34,8 +35,7 @@ namespace NuGet.ProjectModel
                 && string.Equals(RuntimeIdentifier, other.RuntimeIdentifier)
                 && string.Equals(Name, other.Name))
             {
-                return Libraries.OrderBy(library => library.Name, StringComparer.OrdinalIgnoreCase)
-                    .SequenceEqual(other.Libraries.OrderBy(library => library.Name, StringComparer.OrdinalIgnoreCase));
+                return Libraries.OrderedEquals(other.Libraries, library => library.Name, StringComparer.OrdinalIgnoreCase);
             }
 
             return false;
